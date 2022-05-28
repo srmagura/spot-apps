@@ -4,7 +4,63 @@
     ViewData["Title"] = "RuneScape";
 }
 
+@section Styles {
+    <style>
+        body {
+            background-color: #212529;
+            color: #f8f9fa;
+            padding: 6rem 4rem;
+        }
+
+        .title {
+            display: flex;
+            column-gap: 4rem;
+            margin-bottom: 10rem;
+        }
+
+        .flex {
+            display: flex;
+        }
+
+        .item {
+            width: 50%;
+        }
+
+        h1 {
+            font-size: 7rem;
+        }
+
+        h2 {
+            font-size: 5rem;
+        }
+
+        h3 {
+            font-size: 16rem;
+        }
+
+        .rank {
+            color: #9778d3;
+        }
+
+        .xp {
+            color: #4d88ff;
+        }
+    </style>
+}
+
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <div class="title">
+        <img src="images/runescape.png" alt="RuneScape logo" />
+        <h1>@Model.PlayerName</h1>
+    </div>
+    <div class="flex">
+        <div class="item">
+            <h2>Overall Rank</h2>
+            <h3 class="rank">@(Model.Rank / 1000)k</h3>
+        </div>
+        <div class="item">
+            <h2>Overall XP</h2>
+            <h3 class="xp">@(Model.Xp / 1000000)m</h3>
+        </div>
+    </div>
 </div>
