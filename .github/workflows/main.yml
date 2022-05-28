@@ -1,3 +1,4 @@
+name: main
 on: [push]
 
 jobs:
@@ -13,8 +14,9 @@ jobs:
 
       - name: dotnet build and publish
         run: |
+          cd SpotApps
           dotnet build --configuration Release
-          dotnet publish -c Release -o publishOut
+          dotnet publish -c Release -o ../publishOut
 
       - name: Deploy
         uses: azure/webapps-deploy@v2
