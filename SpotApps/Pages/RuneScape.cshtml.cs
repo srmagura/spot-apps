@@ -1,21 +1,43 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
+﻿using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.Extensions.Caching.Memory;
 using System.Text.RegularExpressions;
 
 namespace SpotApps.Pages;
 
 public class RuneScapeModel : PageModel
 {
-    private static readonly HttpClient _httpClient = new();
+    private readonly HttpClient _httpClient;
+    private readonly IMemoryCache _cache;
+
+    public RuneScapeModel(HttpClient httpClient, IMemoryCache cache)
+    {
+        _httpClient = httpClient;
+        _cache = cache;
+    }
 
     public string PlayerName { get; } = "wh1teberry";
     public int Rank { get; private set; }
     public int Xp { get; private set; }
 
+    private Task<string> GetDataAsync()
+    {
+        var key = $"RuneScape:${PlayerName}";
+
+        return _cache.GetOrCreateAsync(
+            key,
+            cacheEntry =>
+            {
+                cacheEntry.AbsoluteExpirationRelativeToNow = TimeSpan.FromHours(6);
+
+                var url = $"https://secure.runescape.com/m=hiscore/index_lite.ws?player={PlayerName}";
+                return _httpClient.GetStringAsync(url);
+            }
+        );
+    }
+
     public async Task OnGetAsync()
     {
-        var url = $"https://secure.runescape.com/m=hiscore/index_lite.ws?player={PlayerName}";
-        var text = await _httpClient.GetStringAsync(url);
+        var text = await GetDataAsync();
 
         var match = Regex.Match(text, @"(\d+),\d+,(\d+)");
 
