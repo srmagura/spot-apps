@@ -1,0 +1,44 @@
+﻿@page
+@model TwitterModel
+@{
+    ViewData["Title"] = "Twitter";
+}
+
+@section Styles {
+    <style>
+        body {
+            color: #333;
+            padding: 6rem 4rem;
+        }
+
+        img {
+            width: 220px;
+            height: 220px;
+        }
+
+        .title {
+            display: flex;
+            align-items: center;
+            column-gap: 4rem;
+        }
+
+        h1 {
+            font-size: 7rem;
+            color: #bababa;
+        }
+
+        .tweet {
+            font-size: 5.5rem;
+        }
+    </style>
+}
+
+<div class="text-center">
+    <div class="title">
+        <img src="images/twitter.svg" alt="Twitter logo" />
+        <h1>@@@Model.Username</h1>
+    </div>
+    <div class="tweet">
+        @Model.Tweet
+    </div>
+</div>

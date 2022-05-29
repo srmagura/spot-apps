@@ -1,8 +1,15 @@
+using SpotApps;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddHttpClient();
+
+builder.Configuration.AddJsonFile("appsettings.DevelopmentSecrets.json");
+
+var apiKeySettings = builder.Configuration.GetSection(nameof(ApiKeySettings)).Get<ApiKeySettings>();
+builder.Services.AddSingleton(apiKeySettings);
 
 var app = builder.Build();
 
