@@ -6,7 +6,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
 builder.Services.AddHttpClient();
 
-builder.Configuration.AddJsonFile("appsettings.DevelopmentSecrets.json");
+builder.Configuration.AddJsonFile("appsettings.DevelopmentSecrets.json", optional: true);
 
 var apiKeySettings = builder.Configuration.GetSection(nameof(ApiKeySettings)).Get<ApiKeySettings>();
 builder.Services.AddSingleton(apiKeySettings);
